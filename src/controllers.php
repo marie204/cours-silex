@@ -5,6 +5,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Entity\Region;
 
 //Request::setTrustedProxies(array('127.0.0.1'));
 
@@ -13,6 +14,24 @@ $app->get('/', function () use ($app) {
 })
 ->bind('homepage')
 ;
+
+$app->get('/region/add', function () use ($app) {
+    $region = new Region();
+    $region->setName('region'.mt_rand(1000,9999));
+    $region->setSlug('region'.mt_rand(1000,9999));
+    $app['em']->persist($region);
+    $app['em']->flush();
+    return $app['twig']->render('region.add.html.twig');
+})->bind('region.add');
+
+$app->get('/region/list', function () use ($app) {
+    $repository = $app['em']->getRepository(Region::class);
+    $regions = $repository->findAll();
+
+    return $app['twig']->render('region.list.html.twig', [
+        'regions' => $regions,
+    ]);
+})->bind('region.list');
 
 $app->error(function (\Exception $e, Request $request, $code) use ($app) {
     if ($app['debug']) {
