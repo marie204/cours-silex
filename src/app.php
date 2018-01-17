@@ -24,7 +24,7 @@ $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__ . '/Entity'
 $conn = [
     'driver' => 'pdo_mysql',
     'host' => 'localhost',
-    'dbname' => 'coursSilex',
+    'dbname' => 'courssilex',
     'user' => 'root',
     'password' => '',
 ];
