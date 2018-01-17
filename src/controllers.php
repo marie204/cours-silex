@@ -24,6 +24,15 @@ $app->get('/region/add', function () use ($app) {
     return $app['twig']->render('region.add.html.twig');
 })->bind('region.add');
 
+$app->get('/region/list', function () use ($app) {
+    $repository = $app['em']->getRepository(Region::class);
+    $regions = $repository->findAll();
+
+    return $app['twig']->render('region.list.html.twig', [
+        'regions' => $regions,
+    ]);
+})->bind('region.list');
+
 $app->error(function (\Exception $e, Request $request, $code) use ($app) {
     if ($app['debug']) {
         return;

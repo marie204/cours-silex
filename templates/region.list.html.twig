@@ -1,0 +1,16 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Slug</th>
+        </tr>
+        {% for region in regions %}
+            <tr>
+                <td>{{ region.name }}</td>
+                <td>{{ region.slug }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
